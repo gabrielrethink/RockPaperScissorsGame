@@ -1,3 +1,4 @@
+console.log("abacate")
 let userScore = 0;
 let computerScore = 0;
 const userScore_span = document.getElementById("user-score");
@@ -32,7 +33,7 @@ const gameResult = (gameResult, winner) => {
   if (winner === "lose") {
     computerScore++;
     computerScore_spam.innerHTML = computerScore;
-    result_p.innerHTML = `${gameResult.userChoice} loses ${gameResult.cumputerChoice}`;
+    result_p.innerHTML = `${gameResult.userChoice} loses to ${gameResult.cumputerChoice}`;
     result_spam.innerHTML = "User Loses This Round";
     animationGlow(gameResult.userChoice, "red-glow");
   }
