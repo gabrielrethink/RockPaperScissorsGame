@@ -1,74 +1,87 @@
-let userScore = 0;
-let computerScore = 0;
+var userScore=0;
+var computerScore = 0;
 const userScore_span = document.getElementById("user-score");
-const computerScore_spam = document.getElementById("computer-score");
+const computerScore_span = document.getElementById("computer-score");
 const scoreBoard_div = document.querySelector(".score-board");
 const result_p = document.querySelector(".result > p");
-const result_spam = document.querySelector(".result > spam");
-const rock_div = document.getElementById("Rock");
-const paper_div = document.getElementById("Paper");
-const scissor_div = document.getElementById("Scissor");
+const rock_div = document.getElementById("r");
+const paper_div = document.getElementById("p");
+const scissors_div = document.getElementById("s");
 
-const getComputerChoice = () => {
-  const choices = ["Rock", "Paper", "Scissor"];
-  return choices[Math.floor(Math.random() * choices.length)];
-};
 
-const animationGlow = (userChoice, className) => {
-  document.getElementById(userChoice).classList.add(className);
-  setTimeout(() => {
-    document.getElementById(userChoice).classList.remove(className);
-  }, 1000);
-};
+function getComputerChoice(){
+    const choices = ['r','p','s'];
+    const randomNumber = Math.floor(Math.random()*3);
+    return choices[randomNumber];
+}
 
-const gameResult = (gameResult, winner) => {
-  if (winner === "win") {
-    userScore++;
-    userScore_span.innerHTML = userScore;
-    result_p.innerHTML = `${gameResult.userChoice} beats ${gameResult.cumputerChoice}`;
-    result_spam.innerHTML = "User Wins This Round";
-    animationGlow(gameResult.userChoice, "green-glow");
-  }
-  if (winner === "lose") {
+
+
+function game(userChoice){
+    const computerChoice = getComputerChoice();
+    console.log(userChoice+computerChoice)
+    switch (userChoice+computerChoice){
+        case "rs":
+        case "pr":
+        case "sp":
+            win(convertToWord(userChoice),convertToWord(computerChoice));
+            break;
+        case "rp":
+        case "ps":
+        case "sr":
+            lose(convertToWord(userChoice),convertToWord(computerChoice));
+            break;
+        case "rr":
+        case "pp":
+        case "ss":
+            draw(convertToWord(userChoice),convertToWord(computerChoice));
+        break;
+    }
+}
+
+function lose(userChoice,computerChoice) {
     computerScore++;
-    computerScore_spam.innerHTML = computerScore;
-    result_p.innerHTML = `${gameResult.userChoice} loses ${gameResult.cumputerChoice}`;
-    result_spam.innerHTML = "User Loses This Round";
-    animationGlow(gameResult.userChoice, "red-glow");
-  }
-  if (winner === "draw") {
-    result_p.innerHTML = `${gameResult.userChoice} draw with ${gameResult.cumputerChoice}`;
-    result_spam.innerHTML = "It's a Draw!! Nobody wins!";
-  }
-};
+    computerScore_span.innerHTML=computerScore;
+    result_p.innerHTML = `${computerChoice} beats ${userChoice}. You lose!`;
+    document.getElementById(getUserChoice(userChoice)).classList.add('red-glow');
+    setTimeout(function() { document.getElementById(getUserChoice(userChoice)).classList.remove('red-glow')}, 300)
+}
 
-const game = (userChoice) => {
-  const cumputerChoice = getComputerChoice();
-  switch (userChoice + "/" + cumputerChoice) {
-    case "Rock/Rock":
-    case "Paper/Paper":
-    case "Scissor/Scissor":
-      gameResult({ userChoice, cumputerChoice }, "draw");
-      break;
-    case "Rock/Scissor":
-    case "Paper/Rock":
-    case "Scissor/Paper":
-      gameResult({ userChoice, cumputerChoice }, "win");
-      break;
-    case "Scissor/Rock":
-    case "Rock/Paper":
-    case "Paper/Scissor":
-      gameResult({ userChoice, cumputerChoice }, "lose");
-      break;
-  }
-};
+function draw(userChoice,computerChoice) {
+    result_p.innerHTML = `${computerChoice} is equals to ${userChoice}. It's a draw!`;
+    document.getElementById(getUserChoice(userChoice)).classList.add('gray-glow');
+    setTimeout(function() { document.getElementById(getUserChoice(userChoice)).classList.remove('gray-glow')}, 300)
+}
 
-rock_div.addEventListener("click", () => {
-  game("Rock");
-});
-paper_div.addEventListener("click", () => {
-  game("Paper");
-});
-scissor_div.addEventListener("click", () => {
-  game("Scissor");
-});
+function win(userChoice,computerChoice) {
+    userScore++;
+    userScore_span.innerHTML=userScore;
+    result_p.innerHTML =  `${userChoice} beats ${computerChoice}. You won!`;
+    document.getElementById(getUserChoice(userChoice)).classList.add('green-glow');
+    setTimeout(function() { document.getElementById(getUserChoice(userChoice)).classList.remove('green-glow')}, 300)
+}
+
+function getUserChoice(choice){
+    if(choice=="Rock") return "r";
+    if(choice == "Paper") return "p";
+    return "s";
+}
+
+function convertToWord(choice){
+    if(choice=="r") return "Rock";
+    if(choice == "s") return "Scissor";
+    return "Paper";
+}
+function main(){
+    rock_div.addEventListener('click', function(){
+        game("r");
+    })
+    paper_div.addEventListener('click', function(){
+        game("p");
+    })
+    scissors_div.addEventListener('click', function(){
+        game("s");
+    })
+}
+
+main();
