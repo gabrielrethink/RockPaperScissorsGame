@@ -1,74 +1,69 @@
 let userScore = 0;
 let computerScore = 0;
 const userScore_span = document.getElementById("user-score");
-const computerScore_spam = document.getElementById("computer-score");
+const computerScore_span = document.getElementById("computer-score");
 const scoreBoard_div = document.querySelector(".score-board");
 const result_p = document.querySelector(".result > p");
-const result_spam = document.querySelector(".result > spam");
-const rock_div = document.getElementById("Rock");
-const paper_div = document.getElementById("Paper");
-const scissor_div = document.getElementById("Scissor");
+const rock_div = document.getElementById("r");
+const paper_div = document.getElementById("p");
+const scissors_div = document.getElementById("s");
 
-const getComputerChoice = () => {
-  const choices = ["Rock", "Paper", "Scissor"];
-  return choices[Math.floor(Math.random() * choices.length)];
-};
+function getComputerChoice(){
+    const choices = ["r" ,"p", "s"];
+    const randomNumber = Math.floor(Math.random()*3); //Math.random me dá um número entre 0 e 1, vezes 3, o retorno do Math.floor será de 0 a 2.
+    return choices[randomNumber];
+}
 
-const animationGlow = (userChoice, className) => {
-  document.getElementById(userChoice).classList.add(className);
-  setTimeout(() => {
-    document.getElementById(userChoice).classList.remove(className);
-  }, 1000);
-};
+const gameResult = (result) => {
+    if (result == "WIN") {
+        userScore++;
+        userScore_span.innerHTML = userScore;
+        result_p.innerHTML = "User WINS"
+    }
+    if (result == "LOSE") {
+        computerScore++;
+        computerScore_span.innerHTML = computerScore;
+        result_p.innerHTML = "User LOSES"
+    }
+    if (result == "DRAW") {
+        result_p.innerHTML = "DRAW"
+    }
+}
 
-const gameResult = (gameResult, winner) => {
-  if (winner === "win") {
-    userScore++;
-    userScore_span.innerHTML = userScore;
-    result_p.innerHTML = `${gameResult.userChoice} beats ${gameResult.cumputerChoice}`;
-    result_spam.innerHTML = "User Wins This Round";
-    animationGlow(gameResult.userChoice, "green-glow");
-  }
-  if (winner === "lose") {
-    computerScore++;
-    computerScore_spam.innerHTML = computerScore;
-    result_p.innerHTML = `${gameResult.userChoice} loses ${gameResult.cumputerChoice}`;
-    result_spam.innerHTML = "User Loses This Round";
-    animationGlow(gameResult.userChoice, "red-glow");
-  }
-  if (winner === "draw") {
-    result_p.innerHTML = `${gameResult.userChoice} draw with ${gameResult.cumputerChoice}`;
-    result_spam.innerHTML = "It's a Draw!! Nobody wins!";
-  }
-};
+function game(userChoice) {
+    const computerChoice = getComputerChoice();
+    switch (userChoice + computerChoice) {
+        case "rp":
+        case "pr":
+        case "sp":
+            gameResult("WIN")    
+            break;
+        case "rp":
+        case "ps":
+        case "sr":
+            gameResult("LOSE")      
+            break;
+        case "rr":
+        case "pp":
+        case "ss":
+            gameResult("DRAW")    
+            break;
+    }
+}
 
-const game = (userChoice) => {
-  const cumputerChoice = getComputerChoice();
-  switch (userChoice + "/" + cumputerChoice) {
-    case "Rock/Rock":
-    case "Paper/Paper":
-    case "Scissor/Scissor":
-      gameResult({ userChoice, cumputerChoice }, "draw");
-      break;
-    case "Rock/Scissor":
-    case "Paper/Rock":
-    case "Scissor/Paper":
-      gameResult({ userChoice, cumputerChoice }, "win");
-      break;
-    case "Scissor/Rock":
-    case "Rock/Paper":
-    case "Paper/Scissor":
-      gameResult({ userChoice, cumputerChoice }, "lose");
-      break;
-  }
-};
 
-rock_div.addEventListener("click", () => {
-  game("Rock");
-});
-paper_div.addEventListener("click", () => {
-  game("Paper");
-});
-scissor_div.addEventListener("click", () => {
-  game("Scissor");
-});
+function main(){
+    rock_div.addEventListener("click", function(){
+        game("r")
+    })
+
+    paper_div.addEventListener("click", function(){
+        game("p")
+    })
+
+    scissors_div.addEventListener("click", function(){
+        game("s")
+    })
+}
+
+main();
