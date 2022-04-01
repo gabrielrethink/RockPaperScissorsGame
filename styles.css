@@ -59,6 +59,24 @@ header{
     font-size: 30px;
 }
 
+.field-choice{
+    margin: 0 auto;
+    margin-top: 30px;
+    text-align: center;
+    padding: 50px;
+    width: 350px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.field-choice > p{
+    font-size: 15px;
+    color: white;
+    font-weight: bold;
+    display: inline-block;
+    
+}
+
 .choices{
     text-align: center;
 }
@@ -79,7 +97,7 @@ header{
 }
 
 #action-message{
-    margin-top: 20px;
+    margin: 20px;
     text-align: center;
     color: white;
     font-weight: bold;

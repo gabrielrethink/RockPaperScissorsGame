@@ -8,6 +8,8 @@ const result_span = document.querySelector(".result > span");
 const rock_div  = document.getElementById("Rock");
 const paper_div  = document.getElementById("Paper");
 const scissor_div  = document.getElementById("Scissor");
+const image1_img = document.getElementById("image1");
+const image2_img = document.getElementById("image2");
 
 const getComputerChoice = () =>{
     const choices = ["Rock", "Paper", "Scissor"];
@@ -34,6 +36,25 @@ const gameResult = (result, winner) => {
         result_span.innerHTML = 'Draw'
 
     }
+    if(result.userChoice === 'Rock'){
+        image1_img.src = "images/rock.png";
+    }
+    if(result.userChoice === 'Paper'){
+        image1_img.src = "images/paper.png";
+    }
+    if(result.userChoice === 'Scissor'){
+        image1_img.src = "images/scissor.png";
+    }
+    if(result.computerChoice === 'Rock'){
+        image2_img.src = "images/rock.png";
+    }
+    if(result.computerChoice === 'Paper'){
+        image2_img.src = "images/paper.png";
+    }
+    if(result.computerChoice === 'Scissor'){
+        image2_img.src = "images/scissor.png";
+    }
+
 }
 
 const game = (userChoice) => {
@@ -42,22 +63,16 @@ const game = (userChoice) => {
         case 'Rock/Rock':
         case 'Paper/Paper':
         case 'Scissor/Scissor':
-            //console.log(userChoice + computerChoice);
-            //console.log("DRAW");
             gameResult({userChoice, computerChoice} ,'draw');
             break;
         case 'Rock/Scissor':
         case 'Paper/Rock':
         case 'Scissor/Paper':
-            //console.log(userChoice + computerChoice);
-            //console.log("User Wins!");
             gameResult({userChoice, computerChoice} ,'win');
             break;
         case 'Rock/Paper':
         case 'Paper/Scissor':
         case 'Scissor/Rock':
-            //console.log(userChoice + computerChoice);
-            //console.log("User Lose!");
             gameResult({userChoice, computerChoice} ,'lose');
             break;
     }
